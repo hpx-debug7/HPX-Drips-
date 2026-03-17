@@ -1,93 +1,71 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 
-export default function HeroSection(): JSX.Element {
-  const [isVisible, setIsVisible] = useState<boolean>(false);
+export function HeroSection() {
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true);
+    setMounted(true);
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-brand-off-black">
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-off-black via-zinc-900 to-brand-off-black" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-800/20 via-transparent to-transparent" />
+    <section className="relative min-h-screen w-full flex items-end">
+      <div className="absolute inset-0 z-0 bg-brand-black">
+        <Image
+          src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=90"
+          alt="SS25 DROP 001 Collection"
+          fill
+          priority
+          className="object-cover"
+          quality={90}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
+      </div>
 
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/40" />
-
-      {/* Content */}
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-        {/* Eyebrow Label */}
-        <p
-          className={`font-display text-xs tracking-[0.3em] uppercase text-brand-acid mb-6 transition-all duration-500 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+      <div className="relative z-10 w-full mb-16 px-8 md:px-16">
+        <p 
+          className={`font-display text-brand-acid text-xs tracking-[0.4em] uppercase mb-4 ${
+            mounted ? 'animate-fade-up opacity-100' : 'opacity-0'
           }`}
-          style={{ transitionDelay: '0ms' }}
+          style={{ animationDelay: '0ms' }}
         >
-          New Season Drop
+          SS25 DROP 001
         </p>
 
-        {/* Headline */}
-        <h1 className="font-display font-black text-5xl sm:text-6xl md:text-7xl leading-none tracking-tighter text-white">
-          <span
-            className={`block transition-all duration-500 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-            }`}
-            style={{ transitionDelay: '100ms' }}
-          >
-            BUILT FOR
-          </span>
-          <span
-            className={`block transition-all duration-500 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-            }`}
-            style={{ transitionDelay: '150ms' }}
-          >
-            THE <span className="text-brand-acid">STREETS</span>
-          </span>
+        <h1 
+          className={`font-display font-black text-[clamp(3.5rem,10vw,8rem)] leading-[0.9] tracking-tighter text-white max-w-5xl ${
+            mounted ? 'animate-fade-up opacity-100' : 'opacity-0'
+          }`}
+          style={{ animationDelay: '100ms' }}
+        >
+          NEW SEASON<br />NEW <span className="text-brand-acid">DRIP</span>
         </h1>
 
-        {/* CTAs */}
-        <div
-          className={`mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-500 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+        <div 
+          className={`flex gap-4 flex-wrap mt-10 ${
+            mounted ? 'animate-fade-up opacity-100' : 'opacity-0'
           }`}
-          style={{ transitionDelay: '200ms' }}
+          style={{ animationDelay: '300ms' }}
         >
-          <a
-            href="/shop"
-            className="bg-brand-acid text-black font-bold px-8 py-4 rounded-full hover:scale-105 transition-transform duration-300"
-          >
-            SHOP THE DROP
-          </a>
-          <a
-            href="/lookbook"
-            className="border border-white/30 text-white px-8 py-4 rounded-full hover:border-white transition-colors duration-300"
-          >
-            EXPLORE LOOKBOOK
-          </a>
+          <Link href="/products" className="bg-brand-acid text-black font-display font-black text-sm px-8 py-4 rounded-full hover:bg-brand-acid-dark hover:scale-105 active:scale-95 transition-all">
+            SHOP DROPS
+          </Link>
+          <Link href="/lookbook" className="border border-white/40 text-white font-display font-black text-sm px-8 py-4 rounded-full hover:bg-white hover:text-black hover:scale-105 active:scale-95 transition-all">
+            VIEW LOOKBOOK
+          </Link>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="text-white/60"
-        >
-          <path d="m6 9 6 6 6-6" />
-        </svg>
+      <div className="absolute bottom-8 right-8 z-20 flex flex-col items-center gap-2">
+        <span className="font-display font-black text-xs tracking-widest text-zinc-400 [writing-mode:vertical-lr] rotate-180">
+          SCROLL
+        </span>
+        <div className="w-px h-12 bg-zinc-600 relative overflow-hidden">
+          <div className="absolute inset-0 bg-brand-acid w-full h-full animate-[slide-down_2s_ease-in-out_infinite]" />
+        </div>
       </div>
     </section>
   );

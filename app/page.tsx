@@ -1,15 +1,19 @@
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
-import HeroSection from '@/components/home/HeroSection';
-import FeaturedDrops from '@/components/home/FeaturedDrops';
+import React from 'react';
+import { HeroSection } from '@/components/home/HeroSection';
+import { TrustBar } from '@/components/home/TrustBar';
+import { CategoryNav } from '@/components/home/CategoryNav';
+import { FeaturedDrops } from '@/components/home/FeaturedDrops';
+import { LookbookTeaser } from '@/components/home/LookbookTeaser';
+import { PRODUCTS } from '@/lib/data';
 
-export default function Home(): JSX.Element {
+export default function HomePage() {
   return (
-    <main className="min-h-screen">
-      <Navbar />
+    <div className="flex flex-col flex-1">
       <HeroSection />
-      <FeaturedDrops />
-      <Footer />
-    </main>
+      <TrustBar />
+      <CategoryNav />
+      <FeaturedDrops products={PRODUCTS} />
+      <LookbookTeaser />
+    </div>
   );
 }
