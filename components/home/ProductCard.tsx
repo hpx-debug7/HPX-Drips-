@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { Product } from '@/types';
 
 interface ProductCardProps {
@@ -12,6 +11,18 @@ export default function ProductCard({ product, index, isVisible }: ProductCardPr
     return `₹${price.toLocaleString('en-IN')}`;
   };
 
+  // Generate a consistent gradient based on product id
+  const gradients = [
+    'from-zinc-700 via-zinc-800 to-zinc-900',
+    'from-zinc-800 via-zinc-700 to-zinc-900',
+    'from-zinc-900 via-zinc-800 to-zinc-700',
+    'from-zinc-800 via-zinc-900 to-zinc-800',
+    'from-zinc-700 via-zinc-900 to-zinc-800',
+    'from-zinc-900 via-zinc-700 to-zinc-800',
+  ];
+  const gradientIndex = parseInt(product.id, 10) % gradients.length;
+  const gradient = gradients[gradientIndex];
+
   return (
     <div
       className={`group relative bg-zinc-900 rounded-xl overflow-hidden cursor-pointer transition-all duration-500 ${
@@ -20,14 +31,26 @@ export default function ProductCard({ product, index, isVisible }: ProductCardPr
       style={{ transitionDelay: `${index * 80}ms` }}
     >
       {/* Image Container */}
-      <div className="relative aspect-[3/4] overflow-hidden bg-zinc-800">
-        <Image
-          src={product.imageUrl}
-          alt={product.name}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-          sizes="(max-width: 768px) 50vw, 33vw"
-        />
+      <div className={`relative aspect-[3/4] overflow-hidden bg-gradient-to-br ${gradient} transition-transform duration-500 group-hover:scale-105`}>
+        {/* Product Placeholder Icon */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="48"
+            height="48"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="text-zinc-600"
+          >
+            <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+            <circle cx="9" cy="9" r="2" />
+            <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+          </svg>
+        </div>
 
         {/* Badge */}
         {product.badge && (
